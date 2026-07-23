@@ -84,36 +84,64 @@
       <p class="section__eyebrow">Selected work</p>
       <h2 class="section__title">Portfolio</h2>
     </div>
-    <div class="grid reveal">
-      <figure class="phone-card">
-        <div class="phone">
-          <span class="phone__island"></span>
-          <div class="phone__screen">
-            <video src="assets/salvi2.mp4" muted loop playsinline controls preload="metadata"></video>
-          </div>
-        </div>
-        <figcaption>Travel reel &middot; Short-form video</figcaption>
-      </figure>
-      <figure class="phone-card">
-        <div class="phone">
-          <span class="phone__island"></span>
-          <div class="phone__screen">
-            <img src="assets/salvi1.jpeg" alt="Content from Saigon, Vietnam" />
-          </div>
-        </div>
-        <figcaption>Saigon, Vietnam &middot; In-person content</figcaption>
-      </figure>
-      <figure class="phone-card">
-        <div class="phone">
-          <span class="phone__island"></span>
-          <div class="phone__screen">
-            <img src="assets/salvi3.jpeg" alt="Content from Andong, Korea" />
-          </div>
-        </div>
-        <figcaption>Andong, Korea &middot; Lifestyle</figcaption>
-      </figure>
+
+    <div class="tabs" role="tablist" aria-label="Portfolio categories">
+      <button class="tab is-active" role="tab" aria-selected="true" aria-controls="tab-personal" id="tabbtn-personal" data-tab="personal">Personal</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tab-college" id="tabbtn-college" data-tab="college">College</button>
     </div>
-    <p class="portfolio__note">More content coming soon.</p>
+
+    <!-- PERSONAL -->
+    <div class="tab-panel is-active" id="tab-personal" role="tabpanel" aria-labelledby="tabbtn-personal">
+      <div class="grid">
+        <figure class="phone-card">
+          <div class="phone"><span class="phone__island"></span>
+            <div class="phone__screen"><video src="assets/salvi2.mp4" muted loop playsinline controls preload="metadata"></video></div>
+          </div>
+          <figcaption>Travel reel &middot; Short-form video</figcaption>
+        </figure>
+        <figure class="phone-card">
+          <div class="phone"><span class="phone__island"></span>
+            <div class="phone__screen"><img src="assets/salvi1.jpeg" alt="Content from Saigon, Vietnam" /></div>
+          </div>
+          <figcaption>Saigon, Vietnam &middot; In-person content</figcaption>
+        </figure>
+        <figure class="phone-card">
+          <div class="phone"><span class="phone__island"></span>
+            <div class="phone__screen"><img src="assets/salvi3.jpeg" alt="Content from Andong, Korea" /></div>
+          </div>
+          <figcaption>Andong, Korea &middot; Lifestyle</figcaption>
+        </figure>
+        <figure class="phone-card">
+          <div class="phone"><span class="phone__island"></span>
+            <div class="phone__screen"><video src="assets/personal3.mp4" muted loop playsinline controls preload="metadata"></video></div>
+          </div>
+          <figcaption>Personal reel</figcaption>
+        </figure>
+        <figure class="phone-card">
+          <div class="phone"><span class="phone__island"></span>
+            <div class="phone__screen"><video src="assets/personal4.mp4" muted loop playsinline controls preload="metadata"></video></div>
+          </div>
+          <figcaption>Personal reel</figcaption>
+        </figure>
+        <figure class="phone-card">
+          <div class="phone"><span class="phone__island"></span>
+            <div class="phone__screen"><video src="assets/personal5.mp4" muted loop playsinline controls preload="metadata"></video></div>
+          </div>
+          <figcaption>Personal reel</figcaption>
+        </figure>
+        <figure class="phone-card">
+          <div class="phone"><span class="phone__island"></span>
+            <div class="phone__screen"><video src="assets/personal6.mp4" muted loop playsinline controls preload="metadata"></video></div>
+          </div>
+          <figcaption>Personal reel</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- COLLEGE -->
+    <div class="tab-panel" id="tab-college" role="tabpanel" aria-labelledby="tabbtn-college" hidden>
+      <p class="portfolio__note">College content coming soon.</p>
+    </div>
   </section>
 
   <!-- SERVICES -->
@@ -168,6 +196,24 @@
     document.querySelectorAll('.phone-card video').forEach(function (v) {
       v.addEventListener('mouseenter', function () { v.play(); });
       v.addEventListener('mouseleave', function () { v.pause(); });
+    });
+
+    // Portfolio tabs
+    document.querySelectorAll('.tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = btn.dataset.tab;
+        document.querySelectorAll('.tab').forEach(function (b) {
+          var active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        document.querySelectorAll('.tab-panel').forEach(function (p) {
+          var active = p.id === 'tab-' + target;
+          p.classList.toggle('is-active', active);
+          p.hidden = !active;
+          if (!active) { p.querySelectorAll('video').forEach(function (v) { v.pause(); }); }
+        });
+      });
     });
 
     // Reveal-on-scroll
